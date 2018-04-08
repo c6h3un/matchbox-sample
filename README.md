@@ -52,11 +52,14 @@ Install container linux with matchbox.
   $ docker load -i docker-images/dnsmasq_latest
   ```
 ### Setup with configurations
+The configs used here will not work, change the following informations according to your environment configs.
 - Hostname
-- IP
-- DNS nameserver and search domain
+- Network(IP, gateway, interface)
+- DNS nameserver, search domain
 - NTP server
-- Docker registry
+- Docker registry (secure / insecure)
+- password
+- ssh key
 
 ### Run matchbox static file server and dnsmasq dhcp server
 #### Matchbox
