@@ -1,0 +1,21 @@
+{
+    "id": "kube-node-1",
+    "name": "CoreOS Container Linux Install",
+    "profile": "k8s-node",
+    "selector": {
+        "os": "installed",
+        "uuid": "7ea52f57-23a9-4ccc-4ae5-5814a994fa0d"
+    },
+    "metadata": {
+      "hostname": "kube-node-1",
+      "ntp_server": "10.128.112.4",
+      "networkd_name": "eth0",
+      "networkd_gateway": "10.128.113.254",
+      "networkd_dns": "10.128.112.4",
+      "networkd_address": "10.128.113.41/24",
+      "networkd_domains": "kube.local",
+      "docker_opts": "--insecure-registry=10.128.113.15:5000",
+      "core_passwd": "$6$rounds=4096$VRogL.X5qN$4f1U2t9oZjtl59KFANoJHJINdw671TDPXFqeMIHMh5BaXSMjV7ZIeVSFE.R.10Q3OBgyMuxLmt/4sf56WcXCK.",
+      "ssh_authorized_keys": ["ssh-rsa AAABB3NzaC1yc2EAAAADAQABAAABAQD24GMhzT1Ynut2q7CzLqlwJk0YUF8CVdxWLd4OMjBn/yudfIHmIlw+s5n2wqx4s0Io+stKVxwM21zWV9q34O4deExMYFZDfJiSKusiDaypu+Ahg7qb8p8OiuEHSpAKbv9e2kl28gmUH4/cIZiQ5c3/+jScIMPH4P8jVJGv96sztOSvyDMmm3jxypkXob5ms1t2v/6Y9JyVsG+ziwMFBj1D/z5wfZTS7itKcZfWhS7mO13qvT9UMhcsM9RuFvk5ULm6XH+kV5aAgQs9e3EQS5uXNCJUxduaJV0Z7+egOpS+cw2FakusWpLCjoLJ25oarhG59Ywn0LHo9uN736cIoOr8 samplekey"]
+    }
+  }

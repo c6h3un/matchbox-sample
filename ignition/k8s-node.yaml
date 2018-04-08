@@ -1,0 +1,83 @@
+---
+systemd:
+  units:
+    - name: docker.service
+      enable: true
+      dropins:
+        - name: 10-insecure-registry.conf
+          contents: |
+            [Service]
+            Environment="DOCKER_OPTS={{.docker_opts}}"
+        - name: 20-increase-ulimit.conf
+          contents: |
+            [Service]
+            LimitNOFILE=1048576
+            LimitNPROC=infinity
+            LimitCORE=infinity
+    - name: locksmithd.service
+      mask: true
+    - name: update-engine.service
+      mask: true
+
+storage:
+  {{ if index . "pxe" }}
+  disks:
+    - device: /dev/sda
+      wipe_table: true
+      partitions:
+        - label: ROOT
+  filesystems:
+    - name: rootfs
+      mount:
+        device: "/dev/sda1"
+        format: "ext4"
+        create:
+          force: true
+          options:
+            - "-LROOT"
+  {{else}}
+  filesystems:
+    - name: rootfs
+      mount:
+        device: "/dev/disk/by-label/ROOT"
+        format: "ext4"
+  {{end}}
+  files:
+    - path: /etc/hostname
+      filesystem: rootfs
+      mode: 0644
+      contents:
+        inline: |
+          {{.hostname}}
+    {{ if index . "ntp_server" }}
+    - path: /etc/systemd/timesyncd.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Time]
+          NTP={{.ntp_server}}
+    {{end}}
+
+networkd:
+  units:
+    - name: 00-{{.networkd_name}}.network
+      contents: |
+        [Match]
+        Name={{.networkd_name}}
+        [Network]
+        Gateway={{.networkd_gateway}}
+        DNS={{.networkd_dns}}
+        Address={{.networkd_address}}
+        Domains={{.networkd_domains}}
+
+{{ if and .ssh_authorized_keys .core_passwd }}
+passwd:
+  users:
+    - name: core
+      password_hash: {{ .core_passwd }}
+      ssh_authorized_keys:
+        {{ range $element := .ssh_authorized_keys }}
+        - {{$element}}
+        {{end}}
+{{end}}
